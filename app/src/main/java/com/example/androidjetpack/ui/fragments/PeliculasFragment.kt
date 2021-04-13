@@ -1,25 +1,28 @@
 package com.example.androidjetpack.ui.fragments
 
-import android.annotation.SuppressLint
-import android.content.Context
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidjetpack.R
 import com.example.androidjetpack.data.Pelicula
 import com.example.androidjetpack.providers.PeliculasProvider
+import com.example.androidjetpack.repositories.PeliculasRepositoryImpl
 import com.example.androidjetpack.ui.adapters.PeliculasAdapter
 import com.example.androidjetpack.ui.adapters.helpers.GridItemDecoration
+import com.example.androidjetpack.viewmodels.PeliculasViewModel
+import com.example.androidjetpack.viewmodels.factories.PeliculasViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
-import java.util.concurrent.TimeUnit
 
 class PeliculasFragment : BaseFragment() {
 
+    private val viewModel: PeliculasViewModel by viewModels {
+        PeliculasViewModelFactory(
+            PeliculasRepositoryImpl(PeliculasProvider())
+        )
+    }
     private val peliculasAdapter = PeliculasAdapter(this::onPeliculaClicked)
     private lateinit var rvPeliculas: RecyclerView
     private lateinit var fabAgregar: FloatingActionButton
@@ -43,11 +46,12 @@ class PeliculasFragment : BaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         setupAdapter()
+        bindViewModel()
     }
 
     override fun onResume() {
         super.onResume()
-        obtenerPeliculas()
+        viewModel.obtenerPeliculas()
     }
 
     private fun configurarUI(view: View) {
@@ -62,26 +66,14 @@ class PeliculasFragment : BaseFragment() {
         rvPeliculas.adapter = peliculasAdapter
     }
 
-    @SuppressLint("CheckResult")
-    private fun obtenerPeliculas() {
-        showLoading(true)
-        PeliculasProvider()
-            .getPeliculas()
-            .delay(1500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doFinally { showLoading(false) }
-            .subscribe(
-                {
-                    peliculasAdapter.actualizarPeliculas(it)
-                }, {
-                    Log.e(
-                        PeliculasFragment::class.java.simpleName,
-                        "Error al obtener las películas",
-                        it
-                    )
-                }
-            )
+    private fun bindViewModel() {
+        viewModel.peliculas.observe(viewLifecycleOwner, ::actualizarPeliculas)
+        viewModel.mensaje.observe(viewLifecycleOwner, ::mostrarMensaje)
+        viewModel.showLoading.observe(viewLifecycleOwner, ::showLoading)
+    }
+
+    private fun actualizarPeliculas(peliculas: List<Pelicula>) {
+        peliculasAdapter.actualizarPeliculas(peliculas)
     }
 
     private fun onPeliculaClicked(pelicula: Pelicula) {

@@ -1,0 +1,21 @@
+<resources>
+    <string name="app_name">Android Jetpack</string>
+    <string name="imagen_pelicula">Imagen película</string>
+    <string name="icono_estrella">Icono estrella</string>
+    <string name="icono_genero">Icono género</string>
+    <string name="icono_fecha">icono_fecha</string>
+    <string name="icono_lenguaje">icono_lenguaje</string>
+    <string name="descripcion">Descripción</string>
+    <string name="thumbnail_pelicula">Thumbnail película</string>
+    <string name="peliculas">Películas</string>
+    <string name="crear_pelicula">Crear película</string>
+    <string name="nombre">Nombre</string>
+    <string name="genero">Género</string>
+    <string name="anio">Año</string>
+    <string name="calificacion">Calificación</string>
+    <string name="imagen">Imagen</string>
+    <string name="crear">Crear</string>
+    <string name="idioma">Idioma</string>
+    <string name="eliminar_pelicula">Eliminar película</string>
+    <string name="eliminar">Eliminar</string>
+</resources>

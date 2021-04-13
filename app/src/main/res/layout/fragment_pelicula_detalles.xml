@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@android:color/white"
+        android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewThumbnail"
+            android:layout_width="150dp"
+            android:layout_height="220dp"
+            android:contentDescription="@string/imagen_pelicula"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/placeholder_pelicula" />
+
+        <TextView
+            android:id="@+id/textViewTitulo"
+            style="@style/H3"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
+            android:minLines="2"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewStar"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/imageViewThumbnail"
+            app:layout_constraintTop_toTopOf="@id/imageViewThumbnail"
+            tools:text="Título" />
+
+        <ImageView
+            android:id="@+id/imageViewStar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/icono_estrella"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewGenero"
+            app:layout_constraintStart_toEndOf="@+id/imageViewThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/textViewTitulo"
+            app:srcCompat="@drawable/ic_star" />
+
+        <TextView
+            android:id="@+id/textViewEstrellas"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewStar"
+            app:layout_constraintStart_toEndOf="@+id/imageViewStar"
+            app:layout_constraintTop_toTopOf="@+id/imageViewStar"
+            tools:text="3.7/10" />
+
+        <ImageView
+            android:id="@+id/imageViewGenero"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/icono_genero"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewFecha"
+            app:layout_constraintStart_toEndOf="@+id/imageViewThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewStar"
+            app:srcCompat="@drawable/ic_genre" />
+
+        <TextView
+            android:id="@+id/textViewGenero"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewGenero"
+            app:layout_constraintStart_toEndOf="@+id/imageViewGenero"
+            app:layout_constraintTop_toTopOf="@+id/imageViewGenero"
+            tools:text="Terror" />
+
+        <ImageView
+            android:id="@+id/imageViewFecha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/icono_fecha"
+            app:layout_constraintBottom_toTopOf="@+id/imageViewLenguaje"
+            app:layout_constraintStart_toEndOf="@+id/imageViewThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewGenero"
+            app:srcCompat="@drawable/ic_date" />
+
+        <TextView
+            android:id="@+id/textViewFechaLanzamiento"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewFecha"
+            app:layout_constraintStart_toEndOf="@+id/imageViewFecha"
+            app:layout_constraintTop_toTopOf="@+id/imageViewFecha"
+            tools:text="2019" />
+
+        <ImageView
+            android:id="@+id/imageViewLenguaje"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="16dp"
+            android:contentDescription="@string/icono_lenguaje"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewThumbnail"
+            app:layout_constraintStart_toEndOf="@+id/imageViewThumbnail"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewFecha"
+            app:srcCompat="@drawable/ic_language" />
+
+        <TextView
+            android:id="@+id/textViewLenguaje"
+            style="@style/Text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            app:layout_constraintBottom_toBottomOf="@+id/imageViewLenguaje"
+            app:layout_constraintStart_toEndOf="@+id/imageViewLenguaje"
+            app:layout_constraintTop_toTopOf="@+id/imageViewLenguaje"
+            tools:text="en" />
+
+        <androidx.cardview.widget.CardView
+            android:id="@+id/cardViewDescripcion"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            app:cardElevation="8dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageViewThumbnail">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="8dp">
+
+                <TextView
+                    style="@style/H3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/descripcion" />
+
+                <TextView
+                    android:id="@+id/textViewDescripcion"
+                    style="@style/Text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    tools:text="@tools:sample/lorem/random" />
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

@@ -8,7 +8,7 @@ import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidjetpack.R
 import com.example.androidjetpack.data.Pelicula
-import com.example.androidjetpack.providers.PeliculasProvider
+import com.example.androidjetpack.db.PeliculaDatabase
 import com.example.androidjetpack.repositories.PeliculasRepositoryImpl
 import com.example.androidjetpack.ui.adapters.PeliculasAdapter
 import com.example.androidjetpack.ui.adapters.helpers.GridItemDecoration
@@ -20,7 +20,11 @@ class PeliculasFragment : BaseFragment() {
 
     private val viewModel: PeliculasViewModel by viewModels {
         PeliculasViewModelFactory(
-            PeliculasRepositoryImpl(PeliculasProvider())
+            PeliculasRepositoryImpl(
+                PeliculaDatabase
+                    .getInstance(requireContext())
+                    .peliculaDao()
+            )
         )
     }
     private val peliculasAdapter = PeliculasAdapter(this::onPeliculaClicked)

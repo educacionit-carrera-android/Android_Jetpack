@@ -1,14 +1,15 @@
 package com.example.androidjetpack.ui.fragments
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.EditText
-import android.widget.Toast
 import com.example.androidjetpack.R
 import com.example.androidjetpack.data.Pelicula
+import com.example.androidjetpack.db.PeliculaDatabase
 import com.example.androidjetpack.helpers.validadorformulario.*
 import com.example.androidjetpack.helpers.validadorformulario.ValidadorAnio.Companion.VALIDADOR_ANIO
 import com.example.androidjetpack.helpers.validadorformulario.ValidadorCalificacion.Companion.VALIDADOR_CALIFICACION
@@ -17,6 +18,10 @@ import com.example.androidjetpack.helpers.validadorformulario.ValidadorGenero.Co
 import com.example.androidjetpack.helpers.validadorformulario.ValidadorIdioma.Companion.VALIDADOR_IDIOMA
 import com.example.androidjetpack.helpers.validadorformulario.ValidadorImagen.Companion.VALIDADOR_IMAGEN
 import com.example.androidjetpack.helpers.validadorformulario.ValidadorNombre.Companion.VALIDADOR_NOMBRE
+import com.example.androidjetpack.mappers.PeliculaMapper.toPeliculaEntity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 
 class CrearPeliculaFragment : BaseFragment() {
 
@@ -29,6 +34,7 @@ class CrearPeliculaFragment : BaseFragment() {
     private lateinit var etImagen: EditText
     private lateinit var buttonCrear: Button
     private val validadorFormulario = ValidadorFormularios()
+    private val compositeDisposable = CompositeDisposable()
 
     companion object {
         fun newInstance(): CrearPeliculaFragment = CrearPeliculaFragment()
@@ -66,12 +72,26 @@ class CrearPeliculaFragment : BaseFragment() {
         validarCampos()
         if (datosValidos()) {
             val pelicula = crearObjetoPelicula()
-            // TODO crear pelicula dentro de la DB
-            Toast
-                .makeText(requireContext(), "Película agregada correctamente", Toast.LENGTH_LONG)
-                .show()
-            volver()
+            crearPelicula(pelicula)
         }
+    }
+
+    private fun crearPelicula(pelicula: Pelicula) {
+        compositeDisposable.add(
+            PeliculaDatabase
+                .getInstance(requireContext())
+                .peliculaDao()
+                .insertPelicula(pelicula.toPeliculaEntity())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    mostrarMensaje("Película agregada correctamente")
+                    volver()
+                }, {
+                    mostrarMensaje("Hubo un error al querer agregar la pelicula")
+                    Log.e(CrearPeliculaFragment::class.simpleName, it.message, it)
+                })
+        )
     }
 
     private fun validarCampos() {
@@ -127,5 +147,10 @@ class CrearPeliculaFragment : BaseFragment() {
 
     private fun volver() {
         requireActivity().supportFragmentManager.popBackStack()
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        compositeDisposable.clear()
     }
 }

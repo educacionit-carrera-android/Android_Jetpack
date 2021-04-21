@@ -11,7 +11,8 @@ class Pelicula(
     val anio: Int,
     val idioma: String,
     val calificacion: String,
-    val imagen: String
+    val imagen: String,
+    val id: Int? = null
 ) : Parcelable {
     fun getCalificacionFormateada(): String {
         return "$calificacion/10"

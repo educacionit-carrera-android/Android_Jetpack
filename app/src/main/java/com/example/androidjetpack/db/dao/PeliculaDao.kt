@@ -1,5 +1,6 @@
 package com.example.androidjetpack.db.dao
 
+import androidx.paging.PagingSource
 import androidx.room.*
 import com.example.androidjetpack.db.data.PeliculaEntity
 import io.reactivex.Completable
@@ -19,4 +20,7 @@ interface PeliculaDao {
 
     @Query("SELECT * FROM pelicula")
     fun getPeliculas(): Single<List<PeliculaEntity>>
+
+    @Query("SELECT * FROM pelicula")
+    fun getPeliculasPaging(): PagingSource<Int, PeliculaEntity>
 }

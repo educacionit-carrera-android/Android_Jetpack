@@ -1,7 +1,9 @@
 package com.example.androidjetpack.repositories
 
+import androidx.paging.PagingSource
 import com.example.androidjetpack.data.Pelicula
 import com.example.androidjetpack.db.dao.PeliculaDao
+import com.example.androidjetpack.db.data.PeliculaEntity
 import com.example.androidjetpack.mappers.PeliculaMapper.toPeliculas
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,5 +19,10 @@ class PeliculasRepositoryImpl(
             .map { it.toPeliculas() }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+    }
+
+    override fun getPeliculasPaging(): PagingSource<Int, PeliculaEntity> {
+        return peliculaDao
+            .getPeliculasPaging()
     }
 }

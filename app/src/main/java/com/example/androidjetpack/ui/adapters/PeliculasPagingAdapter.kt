@@ -20,20 +20,15 @@ class PeliculasPagingAdapter(
             LayoutInflater
                 .from(parent.context)
                 .inflate(R.layout.item_pelicula, parent, false)
-        ).apply {
-            if (bindingAdapterPosition != -1){
-                getItem(bindingAdapterPosition)?.let { peliculaEntity ->
-                    itemView.setOnClickListener {
-                        listener.onClick(peliculaEntity)
-                    }
-                }
-            }
-        }
+        )
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        getItem(position)?.let {
-            cargarImagen(it.imagen, holder.imageViewThumbnail)
+        getItem(position)?.let { peliculaEntity ->
+            cargarImagen(peliculaEntity.imagen, holder.imageViewThumbnail)
+            holder.itemView.setOnClickListener {
+                listener.onClick(peliculaEntity)
+            }
         }
     }
 

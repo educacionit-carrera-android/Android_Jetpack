@@ -2,23 +2,16 @@ package com.example.androidjetpack.ui.fragments
 
 import android.os.Bundle
 import android.view.*
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.appcompat.app.AlertDialog
 import com.example.androidjetpack.R
 import com.example.androidjetpack.data.Pelicula
+import com.example.androidjetpack.databinding.FragmentPeliculaDetallesBinding
 import com.example.androidjetpack.helpers.ImageManager
 
 class PeliculaDetallesFragment : BaseFragment() {
 
-    private lateinit var imgThumbnail: ImageView
-    private lateinit var txtTitulo: TextView
-    private lateinit var txtEstrellas: TextView
-    private lateinit var txtGenero: TextView
-    private lateinit var txtFechaLanzamiento: TextView
-    private lateinit var txtLenguaje: TextView
-    private lateinit var txtDescripcion: TextView
     private var pelicula: Pelicula? = null
+    private lateinit var binding: FragmentPeliculaDetallesBinding
 
     companion object {
         private const val PELICULA = "Pelicula"
@@ -42,39 +35,24 @@ class PeliculaDetallesFragment : BaseFragment() {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        val view = inflater.inflate(R.layout.fragment_pelicula_detalles, container, false)
-        configurarUI(view)
+    ): View {
+        binding = FragmentPeliculaDetallesBinding.inflate(inflater, container, false).apply {
+            pelicula = this@PeliculaDetallesFragment.pelicula
+        }
         actualizarUI()
         setHasOptionsMenu(true)
 
-        return view
-    }
-
-    private fun configurarUI(view: View) {
-        imgThumbnail = view.findViewById(R.id.imageViewThumbnail)
-        txtTitulo = view.findViewById(R.id.textViewTitulo)
-        txtEstrellas = view.findViewById(R.id.textViewEstrellas)
-        txtGenero = view.findViewById(R.id.textViewGenero)
-        txtFechaLanzamiento = view.findViewById(R.id.textViewFechaLanzamiento)
-        txtLenguaje = view.findViewById(R.id.textViewLenguaje)
-        txtDescripcion = view.findViewById(R.id.textViewDescripcion)
+        return binding.root
     }
 
     private fun actualizarUI() {
         pelicula?.let {
             cargarThumbnail(it.imagen)
-            txtTitulo.text = it.nombre
-            txtEstrellas.text = it.getCalificacionFormateada()
-            txtGenero.text = it.genero
-            txtFechaLanzamiento.text = it.anio.toString()
-            txtLenguaje.text = it.idioma
-            txtDescripcion.text = it.descripcion
         }
     }
 
     private fun cargarThumbnail(thumbnailUrl: String) {
-        ImageManager.loadImage(thumbnailUrl, imgThumbnail)
+        ImageManager.loadImage(thumbnailUrl, binding.imageViewThumbnail)
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

@@ -4,8 +4,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.androidjetpack.R
 import com.example.androidjetpack.db.PeliculaDatabase
@@ -14,6 +16,7 @@ import com.example.androidjetpack.mappers.PeliculaMapper.toPelicula
 import com.example.androidjetpack.repositories.PeliculasRepositoryImpl
 import com.example.androidjetpack.ui.adapters.PeliculasPagingAdapter
 import com.example.androidjetpack.ui.adapters.helpers.GridItemDecoration
+import com.example.androidjetpack.ui.fragments.PeliculaDetallesFragment.Companion.PELICULA
 import com.example.androidjetpack.viewmodels.PeliculasViewModel
 import com.example.androidjetpack.viewmodels.factories.PeliculasViewModelFactory
 import com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -36,10 +39,6 @@ class PeliculasFragment : BaseFragment() {
     private val peliculasAdapter = PeliculasPagingAdapter(this::onPeliculaClicked)
     private lateinit var rvPeliculas: RecyclerView
     private lateinit var fabAgregar: FloatingActionButton
-
-    companion object {
-        fun newInstance(): PeliculasFragment = PeliculasFragment()
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -69,7 +68,7 @@ class PeliculasFragment : BaseFragment() {
         rvPeliculas.addItemDecoration(GridItemDecoration(10, 1))
 
         fabAgregar = view.findViewById(R.id.floatingActionButtonAgregar)
-        fabAgregar.setOnClickListener { navigation?.navigateToCrearPelicula() }
+        fabAgregar.setOnClickListener { findNavController().navigate(R.id.goToCrearPelicula) }
     }
 
     private fun setupAdapter() {
@@ -92,6 +91,8 @@ class PeliculasFragment : BaseFragment() {
     }*/
 
     private fun onPeliculaClicked(pelicula: PeliculaEntity) {
-        navigation?.navigateToDetallesPelicula(pelicula.toPelicula())
+        findNavController().navigate(
+            R.id.goToDetallePelicula, bundleOf(PELICULA to pelicula.toPelicula())
+        )
     }
 }

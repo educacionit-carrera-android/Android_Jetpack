@@ -3,6 +3,7 @@ package com.example.androidjetpack.ui.fragments
 import android.os.Bundle
 import android.view.*
 import androidx.appcompat.app.AlertDialog
+import androidx.navigation.fragment.findNavController
 import com.example.androidjetpack.R
 import com.example.androidjetpack.data.Pelicula
 import com.example.androidjetpack.databinding.FragmentPeliculaDetallesBinding
@@ -14,15 +15,7 @@ class PeliculaDetallesFragment : BaseFragment() {
     private lateinit var binding: FragmentPeliculaDetallesBinding
 
     companion object {
-        private const val PELICULA = "Pelicula"
-
-        fun newInstance(pelicula: Pelicula): PeliculaDetallesFragment {
-            return PeliculaDetallesFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(PELICULA, pelicula)
-                }
-            }
-        }
+        const val PELICULA = "Pelicula"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -79,6 +72,6 @@ class PeliculaDetallesFragment : BaseFragment() {
     }
 
     private fun volver() {
-        requireActivity().supportFragmentManager.popBackStack()
+        findNavController().popBackStack()
     }
 }

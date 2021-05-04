@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.EditText
+import androidx.navigation.fragment.findNavController
 import com.example.androidjetpack.data.Pelicula
 import com.example.androidjetpack.databinding.FragmentPeliculaCrearBinding
 import com.example.androidjetpack.db.PeliculaDatabase
@@ -28,10 +29,6 @@ class CrearPeliculaFragment : BaseFragment() {
     private val compositeDisposable = CompositeDisposable()
     private var _binding: FragmentPeliculaCrearBinding? = null
     private val binding get() = _binding!! // Propiedad válida entre onCreateView y onDestroyView.
-
-    companion object {
-        fun newInstance(): CrearPeliculaFragment = CrearPeliculaFragment()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -135,7 +132,7 @@ class CrearPeliculaFragment : BaseFragment() {
     }
 
     private fun volver() {
-        requireActivity().supportFragmentManager.popBackStack()
+        findNavController().popBackStack()
     }
 
     override fun onDestroyView() {

@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph_peliculas"
+    app:startDestination="@id/splashScreenFragment">
+    <fragment
+        android:id="@+id/splashScreenFragment"
+        android:name="com.example.androidjetpack.ui.fragments.SplashScreenFragment"
+        android:label="SplashScreenFragment"
+        tools:layout="@layout/fragment_splash_screen">
+        <action
+            android:id="@+id/goToPeliculas"
+            app:destination="@id/peliculasFragment"
+            app:popUpTo="@id/splashScreenFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/peliculasFragment"
+        android:name="com.example.androidjetpack.ui.fragments.PeliculasFragment"
+        android:label="PeliculasFragment"
+        tools:layout="@layout/fragment_peliculas" >
+        <action
+            android:id="@+id/goToDetallePelicula"
+            app:destination="@id/peliculaDetallesFragment" />
+        <action
+            android:id="@+id/goToCrearPelicula"
+            app:destination="@id/crearPeliculaFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/crearPeliculaFragment"
+        android:name="com.example.androidjetpack.ui.fragments.CrearPeliculaFragment"
+        android:label="CrearPeliculaFragment" />
+    <fragment
+        android:id="@+id/peliculaDetallesFragment"
+        android:name="com.example.androidjetpack.ui.fragments.PeliculaDetallesFragment"
+        android:label="PeliculaDetallesFragment" >
+        <argument
+            android:name="pelicula"
+            app:argType="com.example.androidjetpack.data.Pelicula" />
+    </fragment>
+</navigation>

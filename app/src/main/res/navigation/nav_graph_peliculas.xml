@@ -19,7 +19,7 @@
         android:id="@+id/peliculasFragment"
         android:name="com.example.androidjetpack.ui.fragments.PeliculasFragment"
         android:label="PeliculasFragment"
-        tools:layout="@layout/fragment_peliculas" >
+        tools:layout="@layout/fragment_peliculas">
         <action
             android:id="@+id/goToDetallePelicula"
             app:destination="@id/peliculaDetallesFragment" />
@@ -30,11 +30,13 @@
     <fragment
         android:id="@+id/crearPeliculaFragment"
         android:name="com.example.androidjetpack.ui.fragments.CrearPeliculaFragment"
-        android:label="CrearPeliculaFragment" />
+        android:label="CrearPeliculaFragment"
+        tools:layout="@layout/fragment_pelicula_crear" />
     <fragment
         android:id="@+id/peliculaDetallesFragment"
         android:name="com.example.androidjetpack.ui.fragments.PeliculaDetallesFragment"
-        android:label="PeliculaDetallesFragment" >
+        android:label="PeliculaDetallesFragment"
+        tools:layout="@layout/fragment_pelicula_detalles">
         <argument
             android:name="pelicula"
             app:argType="com.example.androidjetpack.data.Pelicula" />

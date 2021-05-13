@@ -5,8 +5,12 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
+import androidx.work.*
 import com.example.androidjetpack.R
 import com.example.androidjetpack.ui.fragments.BaseViewListener
+import com.example.androidjetpack.workers.SYNC_PELICULAS
+import com.example.androidjetpack.workers.SyncPeliculasWorker
+import java.util.concurrent.TimeUnit
 
 class MainActivity : AppCompatActivity(), BaseViewListener {
 
@@ -18,6 +22,7 @@ class MainActivity : AppCompatActivity(), BaseViewListener {
         setContentView(R.layout.activity_main)
 
         setupUI()
+        launchSyncPeliculasWorker()
     }
 
     private fun setupUI() {
@@ -31,6 +36,26 @@ class MainActivity : AppCompatActivity(), BaseViewListener {
         } else {
             View.GONE
         }
+    }
+
+    private fun launchSyncPeliculasWorker() {
+        val constraints = Constraints.Builder()
+            .setRequiresCharging(true)
+            .setRequiredNetworkType(NetworkType.UNMETERED)
+            .build()
+
+        val syncWorkRequest: PeriodicWorkRequest =
+            PeriodicWorkRequestBuilder<SyncPeliculasWorker>(15, TimeUnit.MINUTES)
+                .setConstraints(constraints)
+                .build()
+
+        WorkManager
+            .getInstance(this)
+            .enqueueUniquePeriodicWork(
+                SYNC_PELICULAS,
+                ExistingPeriodicWorkPolicy.KEEP,
+                syncWorkRequest
+            )
     }
 
     override fun showBackIcon(show: Boolean) {

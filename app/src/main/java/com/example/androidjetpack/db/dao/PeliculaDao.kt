@@ -22,5 +22,8 @@ interface PeliculaDao {
     fun getPeliculas(): Single<List<PeliculaEntity>>
 
     @Query("SELECT * FROM pelicula")
+    fun getPeliculasSync(): List<PeliculaEntity>
+
+    @Query("SELECT * FROM pelicula")
     fun getPeliculasPaging(): PagingSource<Int, PeliculaEntity>
 }

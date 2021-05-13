@@ -29,7 +29,7 @@ class SplashScreenFragment : BaseFragment() {
     private fun navigateToPeliculasWithDelay() {
         Handler(Looper.getMainLooper())
             .postDelayed({
-                findNavController().navigate(R.id.goToPeliculas)
+                findNavController().navigate(R.id.goToOnBoarding)
             }, delay)
     }
 }
